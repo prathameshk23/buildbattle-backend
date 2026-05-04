@@ -36,6 +36,12 @@ Open `.env` and set:
 | `SUPABASE_ANON_KEY` | Supabase dashboard → Settings → API → anon public |
 | `SUPABASE_JWT_SECRET` | Supabase dashboard → Settings → API → JWT Settings → JWT Secret |
 | `OPEN_FOOD_FACTS_USER_AGENT` | Set to `YourAppName/1.0 (your@email.com)` |
+| `JSON_BODY_LIMIT` | `12mb` works for food scan photos |
+| `LM_STUDIO_BASE_URL` | LM Studio local server, usually `http://localhost:1234/v1` |
+| `LM_STUDIO_MODEL` | Your loaded vision model id in LM Studio |
+| `LM_STUDIO_API_KEY` | Optional. Only needed if your local server requires auth |
+
+Food scan uses LM Studio's OpenAI-compatible `/v1/chat/completions` endpoint with image input. Load a vision-capable model before calling `POST /food/scan`.
 
 > ⚠️ **Never commit `.env` to version control.** It is listed in `.gitignore`.
 

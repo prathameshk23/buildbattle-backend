@@ -1,8 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
-import { FoodSearchSchema } from '../schemas/index.js';
+import { FoodScanSchema, FoodSearchSchema } from '../schemas/index.js';
 import { searchByName, lookupBarcode } from '../services/foodApi.js';
+import { scanFoodImage } from '../services/foodVision.js';
 import { AppError } from '../types/index.js';
 
 const router = Router();
@@ -50,5 +51,25 @@ router.get('/barcode/:barcode', async (req: Request, res: Response, next: NextFu
     next(err);
   }
 });
+
+// ─── POST /food/scan ─────────────────────────────────────────────────────────
+
+router.post(
+  '/scan',
+  validate(FoodScanSchema),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { image_base64, mime_type } = req.body as {
+        image_base64: string;
+        mime_type: string;
+      };
+
+      const result = await scanFoodImage(image_base64, mime_type);
+      res.json({ data: result, error: null });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 export default router;

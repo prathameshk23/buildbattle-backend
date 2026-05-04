@@ -19,7 +19,7 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
-app.use(express.json());
+app.use(express.json({ limit: process.env.JSON_BODY_LIMIT ?? '12mb' }));
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
 app.get('/', (_req, res) => {

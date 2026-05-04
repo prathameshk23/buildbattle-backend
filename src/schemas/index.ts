@@ -118,3 +118,11 @@ export const WeightLogSchema = z.object({
 export const FoodSearchSchema = z.object({
   q: z.string().min(1, 'Search query is required').max(200),
 });
+
+export const FoodScanSchema = z.object({
+  image_base64: z.string().min(100, 'Image data is required'),
+  mime_type: z
+    .string()
+    .regex(/^image\/(png|jpe?g|webp)$/i, 'Use PNG, JPG, JPEG, or WEBP image')
+    .default('image/jpeg'),
+});
