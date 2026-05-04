@@ -1,17 +1,9 @@
-import express from 'express'
+import 'dotenv/config';
+import app from './app.js';
 
-const app = express()
+const PORT = parseInt(process.env.PORT ?? '3000', 10);
 
-app.get('/', (_req, res) => {
-  res.send('Hello Express!')
-})
-
-app.get('/api/users/:id', (_req, res) => {
-  res.json({ id: _req.params.id })
-})
-
-app.get('/api/posts/:postId/comments/:commentId', (_req, res) => {
-  res.json({ postId: _req.params.postId, commentId: _req.params.commentId })
-})
-
-export default app
+app.listen(PORT, () => {
+  console.log(`🚀 Health & Fitness API running on http://localhost:${PORT}`);
+  console.log(`   Environment: ${process.env.NODE_ENV ?? 'development'}`);
+});
